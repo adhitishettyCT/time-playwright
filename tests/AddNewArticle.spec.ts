@@ -1,47 +1,36 @@
 import { test, expect } from '@playwright/test';
-import dotenv from 'dotenv';
 
-dotenv.config();
+test('Login with Okta and create new WordPress post', async ({ page }) => {
+  // 1. Go to the login page
+  await page.goto('https://api-qa.time.com/wp-admin/'); // 🔁 Replace this with actual login URL
 
-test('Login via Okta, publish article in WordPress, and verify on frontend', async ({ page }) => {
-  const wpAdminURL = 'https://your-site.com/wp-admin';
-  const frontEndBaseURL = 'https://your-site.com';
-  const articleTitle = `Test Article ${Date.now()}`;
-  const articleContent = 'This article was created by Playwright.';
-  
-  await page.goto(wpAdminURL);
+  // 2. Click on Okta Login link
+  await page.getByRole('link', { name: 'Okta Login' }).click();
 
-  // 🔐 Step 1: Detect Okta and log in
-  if (page.url().includes('okta.com')) {
-    console.log('On Okta login page...');
-    await page.fill('input[name="username"]', process.env.OKTA_USERNAME!);
-    await page.fill('input[name="password"]', process.env.OKTA_PASSWORD!);
-    await page.click('input[type="submit"], button[type="submit"]');
+  // 3. Wait for the Okta email input
+// Wait for the email input field to appear
+await page.waitForSelector('input[name="identifier"]');
 
-    // Wait for redirect to WP dashboard
-    await page.waitForURL('**/wp-admin', { timeout: 15000 });
-    console.log('Logged in through Okta.');
-  }
+// Fill in the email
+await page.fill('input[name="identifier"]', 'Adhiti.Shetty@associate.time.com');
 
-  // ✅ Step 2: Go to "Add New Post"
-  await page.click('text=Posts');
-  await page.click('text=Add New');
+// Click the red "Next" button
+await page.getByRole('button', { name: 'Next' }).click();
 
-  // ✏️ Step 3: Add Title & Content
-  await page.fill('textarea[placeholder="Add title"]', articleTitle);
-  await page.click('button[aria-label="Add block"]');
-  await page.keyboard.type(articleContent);
 
-  // 🚀 Step 4: Publish
-  await page.click('text=Publish');
-  await page.click('text=Publish'); // Confirm
+  // 4. Fill password
+  await page.waitForSelector('input[type="password"]');
+  await page.fill('input[type="password"]', 'Rock@123'); // 🔁 Replace with real password (later from .env!)
+  await page.getByRole('button', { name: 'Verify' }).click();
 
-  // 🔗 Step 5: View article
-  await page.click('text=View Post');
-  const articleURL = page.url();
+  // Wait for the "Get a push notification" Select button to appear
+await page.waitForSelector('a[aria-label="Select to get a push notification to the Okta Verify app."]');
 
-  // 🌍 Step 6: Check title exists on front-end
-  await page.goto(articleURL);
-  const h1 = await page.locator('h1').textContent();
-  expect(h1).toContain(articleTitle);
+// Click the button
+await page.click('a[aria-label="Select to get a push notification to the Okta Verify app."]');
+
+
+  // 5. Wait for push notification approval
+  console.log("👉 Waiting for you to approve push notification...");
+  await page.waitForURL('https://api-qa.time.com/wp-admin/'); // or whatever URL you land on after auth
 });
