@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
+  timeout: 60_000, // ✅ Global timeout of 60 seconds for each test
+
   use: {
     baseURL: 'https://qa.time.com',
     browserName: 'chromium',
@@ -13,7 +15,9 @@ export default defineConfig({
     httpCredentials: {
       username: process.env.AUTH_USERNAME!, // non-null assertion
       password: process.env.AUTH_PASSWORD!,
-    }
+    },
   },
-  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]]
+
+  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
 });
+
