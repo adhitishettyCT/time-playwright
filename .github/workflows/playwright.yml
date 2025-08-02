@@ -9,7 +9,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    env:
+      AUTH_USERNAME: ${{ secrets.AUTH_USERNAME }}
+      AUTH_PASSWORD: ${{ secrets.AUTH_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
