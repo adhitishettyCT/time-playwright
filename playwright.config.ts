@@ -8,6 +8,7 @@ export default defineConfig({
 
   use: {
     baseURL: 'https://qa.time.com',
+    storageState: 'auth.json',
     browserName: 'chromium',
     headless: true,
     screenshot: 'only-on-failure',
