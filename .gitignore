@@ -1,1 +1,3 @@
-node_modules/\nplaywright-report/\n.env\n*.log
+.env
+node_modules
+
