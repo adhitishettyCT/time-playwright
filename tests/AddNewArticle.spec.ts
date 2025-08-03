@@ -5,7 +5,7 @@ dotenv.config();
 
 test('Login with Okta and create new WordPress post', async ({ page }) => {
   // 1. Go to the login page
-  //await page.goto('https://api-qa.time.com/wp-admin/'); // 🔁 Replace this with actual login URL
+  await page.goto('https://api-qa.time.com/wp-admin/'); // 🔁 Replace this with actual login URL
 
   // 2. Click on Okta Login link
   //await page.getByRole('link', { name: 'Okta Login' }).click();
@@ -80,12 +80,12 @@ test('Login with Okta and create new WordPress post', async ({ page }) => {
   await page.click('button.components-button.has-icon[aria-label="Settings"]');
   await page.locator('[data-label="Post"]').click();
   
-  const authorToggle = page.locator('.components-button.components-panel__body-toggle').nth(3);
+  const authorToggle = page.getByRole('button', { name: 'Author' });
 
   // 2. Check if Author panel is expanded
   const isAuthorExpanded = await authorToggle.getAttribute('aria-expanded');
   if (isAuthorExpanded !== 'true') {
-  await page.locator('.components-button.components-panel__body-toggle').nth(3).click(); // Expand if not already expanded
+  await page.getByRole('button', { name: 'Author' }).click(); // Expand if not already expanded
   }
   
   // 3. Fill "TIN" into the Author search box
@@ -93,7 +93,7 @@ test('Login with Okta and create new WordPress post', async ({ page }) => {
   
   // 4. Wait and select the first matching author (like Alice Fantine)
   await page.waitForTimeout(2000); // Adjust if needed based on network
-  await page.getByRole('option').first().click();
+  await page.locator('.search-results .search-result').nth(1).click();
   
   // 5. Collapse the Author section
   await authorToggle.click();
