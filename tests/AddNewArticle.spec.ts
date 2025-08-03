@@ -101,7 +101,22 @@ test('Login with Okta and create new WordPress post', async ({ page }) => {
 
 // 5. Fill the SEO Title field
 // Input element or textarea labeled as 'SEO title' or aria-label containing 'SEO title'
-await page.locator('#inspector-text-control-4').fill('Test SEO Title');
-await page.locator('#inspector-textarea-control-0').fill('Test SEO Description');
+await page.getByRole('textbox', { name: 'Title', exact: true }).fill('Test SEO Title');
+await page.getByRole('textbox', { name: 'Description' }).fill('Test SEO Description');
+
+const sectionToggle = page.getByRole('button', { name: 'Sections' });
+const isSectionExpanded = await sectionToggle.getAttribute('aria-expanded');
+if (isSectionExpanded !== 'true') {
+await sectionToggle.click(); // Expand if not already expanded
+}
+await page.getByRole('option').first().click();
+
+const tagsToggle = page.getByRole('button', { name: 'Sections' });
+const istagsExpanded = await tagsToggle.getAttribute('aria-expanded');
+if (istagsExpanded !== 'true') {
+await tagsToggle.click(); // Expand if not already expanded
+}
+await page.getByRole('option').first().click();
+ 
 
 });
