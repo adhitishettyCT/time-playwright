@@ -1,0 +1,6 @@
+Template: Exclusive Article
+URL Tested: https://time.com/7304882/giorgia-meloni-interview/
+Test Page: https://search.google.com/test/rich-results
+Screenshot: screenshots/Exclusive-Article-richresults-url/Exclusive-Article-2025-08-06T18-21-58-030Z.png
+Attempts: 5
+Result: Test failed after maximum retries.

@@ -1,0 +1,6 @@
+Template: Collection Hub
+URL Tested: https://time.com/collections/100-best-podcasts/
+Test Page: https://search.google.com/test/rich-results
+Screenshot: screenshots/Collection-Hub-richresults-url/Collection-Hub-2025-08-06T18-22-18-838Z.png
+Attempts: 5
+Result: Test completed successfully.

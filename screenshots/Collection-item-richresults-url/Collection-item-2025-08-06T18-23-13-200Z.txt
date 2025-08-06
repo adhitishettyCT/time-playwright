@@ -1,0 +1,6 @@
+Template: Collection item
+URL Tested: https://time.com/collections/time100-creators-2025/7299142/kai-cenat/
+Test Page: https://search.google.com/test/rich-results
+Screenshot: screenshots/Collection-item-richresults-url/Collection-item-2025-08-06T18-23-13-200Z.png
+Attempts: 4
+Result: Test completed successfully.

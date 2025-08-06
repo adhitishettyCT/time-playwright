@@ -1,3 +1,0 @@
-Article URL: https://qa.time.com/7298631/trump-israel-gaza-hamas-war-ceasefire-deal-palestinians-idf-netanyahu/
-Status: TIMEOUT
-Screenshot: /Users/admin1/time-playwright-tests/rich-result-TIMEOUT-2025-07-29T15-04-55-131Z.png

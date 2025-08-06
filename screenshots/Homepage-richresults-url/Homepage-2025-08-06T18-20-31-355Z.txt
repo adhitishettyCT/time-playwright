@@ -1,0 +1,6 @@
+Template: Homepage
+URL Tested: https://time.com/
+Test Page: https://search.google.com/test/rich-results
+Screenshot: screenshots/Homepage-richresults-url/Homepage-2025-08-06T18-20-31-355Z.png
+Attempts: 4
+Result: Test completed successfully.

@@ -68,7 +68,7 @@ test('Login with Okta and create new WordPress post', async ({ page }) => {
 
   // 10. Search for 'Code' block
   await page.getByRole('option', { name: 'Blockquote' }).click();
-  //await page.getByRole('textbox', { name: 'Quote text' }).fill('console.log("Hello from Playwright");');
+  await page.getByRole('textbox', { name: 'Quote text' }).fill('console.log("Hello from Playwright");');
   const blockquoteSelector = '[aria-label="Quote text"]';
 
 
@@ -78,9 +78,9 @@ test('Login with Okta and create new WordPress post', async ({ page }) => {
   await page.type(blockquoteSelector, 'This is a test blockquote filled by Playwright!');
   
   await page.click('button.components-button.has-icon[aria-label="Settings"]');
-  await page.locator('[data-label="Post"]').click();
+ await page.locator('[data-label="Post"]').click();
   
-  const authorToggle = page.getByRole('button', { name: 'Author' });
+ const authorToggle = page.getByRole('button', { name: 'Author' });
 
   // 2. Check if Author panel is expanded
   const isAuthorExpanded = await authorToggle.getAttribute('aria-expanded');
@@ -93,8 +93,8 @@ test('Login with Okta and create new WordPress post', async ({ page }) => {
   
   // 4. Wait and select the first matching author (like Alice Fantine)
   await page.waitForTimeout(2000); // Adjust if needed based on network
-  await page.locator('.search-results .search-result').nth(1).click();
-  
+  const searchResults = page.locator('.search-result');
+  await searchResults.nth(2).locator('button.components-button.is-link').click();
   // 5. Collapse the Author section
   await authorToggle.click();
 
@@ -105,18 +105,45 @@ await page.getByRole('textbox', { name: 'Title', exact: true }).fill('Test SEO T
 await page.getByRole('textbox', { name: 'Description' }).fill('Test SEO Description');
 
 const sectionToggle = page.getByRole('button', { name: 'Sections' });
-const isSectionExpanded = await sectionToggle.getAttribute('aria-expanded');
-if (isSectionExpanded !== 'true') {
-await sectionToggle.click(); // Expand if not already expanded
-}
-await page.getByRole('option').first().click();
+const dropdownTrigger = page.getByLabel('Primary Section');
 
-const tagsToggle = page.getByRole('button', { name: 'Sections' });
-const istagsExpanded = await tagsToggle.getAttribute('aria-expanded');
-if (istagsExpanded !== 'true') {
-await tagsToggle.click(); // Expand if not already expanded
-}
-await page.getByRole('option').first().click();
- 
+  if (!(await dropdownTrigger.isVisible())) {
+    await sectionToggle.click(); // Expand the section if not already
+  }
 
+  // STEP 2: Click the section dropdown
+  //const dropdownTrigger = page.getByLabel('Primary Section');
+  await dropdownTrigger.click();
+
+  // STEP 3: Select the "Living" option
+  const selectsection = page.locator('#inspector-select-control-4');
+  await selectsection.selectOption({ label: 'Living' });
+
+
+  // STEP 4: Collapse the section
+  if (await dropdownTrigger.isVisible()) {
+    await sectionToggle.click();
+  }
+ // STEP 2: Click the Tags dropdown
+  const tagsToggle = page.getByRole('button', { name: 'Tags' });
+  const TagsdropdownTrigger = page.getByLabel('Primary Tag');
+  
+    if (!(await dropdownTrigger.isVisible())) {
+      await tagsToggle.click(); // Expand the section if not already
+    }
+  
+    // STEP 2: Click the dropdown
+    //const dropdownTrigger = page.getByLabel('Primary Section');
+    await TagsdropdownTrigger.click();
+  
+    // STEP 3: Select the "Living" option
+    const selecttag = page.locator('#inspector-select-control-3');
+  await selecttag.selectOption({ label: 'climate change' });
+  
+    // STEP 4: Collapse the section
+    if (await dropdownTrigger.isVisible()) {
+      await tagsToggle.click();
+    }
+    //await page.getByRole('button', { name: 'Publish', exact: true }).click();
+   // await page.getByLabel('Editor publish').getByRole('button', { name: 'Publish', exact: true }).click()
 });
