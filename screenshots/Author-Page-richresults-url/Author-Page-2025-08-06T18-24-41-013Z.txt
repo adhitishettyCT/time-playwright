@@ -1,6 +1,0 @@
-Template: Author Page
-URL Tested: https://time.com/author/philip-elliott/
-Test Page: https://search.google.com/test/rich-results
-Screenshot: screenshots/Author-Page-richresults-url/Author-Page-2025-08-06T18-24-41-013Z.png
-Attempts: 5
-Result: Test completed successfully.

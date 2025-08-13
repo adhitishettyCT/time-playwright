@@ -1,6 +1,0 @@
-Template: Tags
-URL Tested: https://time.com/tag/texas/
-Test Page: https://search.google.com/test/rich-results
-Screenshot: screenshots/Tags-richresults-url/Tags-2025-08-06T18-26-18-370Z.png
-Attempts: 5
-Result: Test failed after maximum retries.

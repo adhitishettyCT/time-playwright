@@ -1,6 +1,0 @@
-Template: Section
-URL Tested: https://time.com/section/politics/
-Test Page: https://search.google.com/test/rich-results
-Screenshot: screenshots/Section-richresults-url/Section-2025-08-06T18-25-32-634Z.png
-Attempts: 2
-Result: Test completed successfully.

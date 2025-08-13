@@ -1,6 +1,0 @@
-Template: Standard Article
-URL Tested: https://time.com/7307163/parent-movement-phone-free-schools/
-Test Page: https://search.google.com/test/rich-results
-Screenshot: screenshots/Standard-Article-richresults-url/Standard-Article-2025-08-06T18-21-12-743Z.png
-Attempts: 3
-Result: Test completed successfully.

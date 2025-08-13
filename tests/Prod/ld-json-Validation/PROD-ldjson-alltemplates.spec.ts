@@ -34,7 +34,7 @@ test.describe.parallel('Validate Rich Results Test via URL', () => {
             const urlInput = page.getByLabel('Enter a URL to test');
             const testButton = page.getByRole('button', { name: 'test url' });
 
-            const MAX_RETRIES = 5;
+            const MAX_RETRIES = 10;
             let attempt = 0;
             let success = false;
 
@@ -57,6 +57,7 @@ test.describe.parallel('Validate Rich Results Test via URL', () => {
                     await page.waitForSelector('text=Something went wrong', { timeout: 10_000 });
                     const dismissBtn = page.getByRole('button', { name: 'Dismiss' });
                     await dismissBtn.click();
+                    await page.waitForTimeout(2000); // ⏳ Small delay before retrying
                     // Continue loop to retry
                 } catch {
                     // No popup = success
@@ -67,12 +68,15 @@ test.describe.parallel('Validate Rich Results Test via URL', () => {
             if (success) {
                 // ✅ ONLY THIS LINE IS CHANGED
                 await page.waitForSelector('text=valid items detected', { timeout: 90_000 }).catch(() => {});
+            
+                // 🟢 Moved here to capture success page correctly
+                await page.screenshot({ path: screenshotPath, fullPage: true });
             } else {
                 console.log(`❌ [${name}] Failed after ${MAX_RETRIES} attempts.`);
+            
+                // 🟠 Still take a screenshot even in failure case
+                await page.screenshot({ path: screenshotPath, fullPage: true });
             }
-
-            await page.screenshot({ path: screenshotPath, fullPage: true });
-
             const logContent = [
                 `Template: ${name}`,
                 `URL Tested: ${url}`,
